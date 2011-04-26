@@ -1,0 +1,29 @@
+==Points of Feedback==
+"My main question is this: what's the use model? Who do we expect to
+use it and what will they want? I can imagine it being very helpful
+for true politicial junkies, professional operatives, etc., but
+suspect the use case for the average citizen is slightly thinner.
+Maybe the appropriate target is for activists focused on specific
+issues, helping them comb through masses of footage to find mentions
+of the issues they care about. Or for congresscritters themselves,
+making it possible to index their appearances and package them to
+communicate with constituents?"
+
+"What about designing for designers-- making a web service with an easy to use API and recruit people to do things with it?
+
+Is there a TheyWorkForYou equivalent in the US?
+
+The C-Span view on Congress is itself an interesting thing to highlight and question, what with the fixed cameras, etc. If C-Span material were made searchable and made available by feed, it might be possible to unlock the creativity of others to fill in that picture in valuable ways. (though Swartz's caveats apply, I believe)"
+
+==Related Work==
+ - http://news.bbc.co.uk/democracylive/hi/bbc_parliament <-- BBC C-SPAN mashups
+ - http://metavid.ucsc.edu/ <-- tagged archive of C-SPAN congress
+ - http://clintlalonde.net/2008/01/26/mit-lecture-browser-text-search-for-video-content/ <-- MIT lecture tagged search (using voice recognition)
+ - Deb roy auto transcription of library of congress
+ - Chris C's "total government awareness" (can't find any live resources for this on the web)
+
+==Tech Resources==
+ - http://sunlightlabs.com/projects/ <-- list of open APIs to gov info
+ - http://www.mythtv.org/ <-- open source DVI software, may help us interface with video streams
+ - http://code.google.com/apis/youtube/2.0/developers_guide_protocol_captions.html <-- automatic captions via streams
+ 
