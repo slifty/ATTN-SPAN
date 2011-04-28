@@ -1,3 +1,4 @@
+== Use Cases ==
 BASE USE CASES:
  - Seed relevance profile
   - regions of interest
@@ -44,3 +45,24 @@ SYSTEM USE CASES
  - CRUD term association (to region or topic)
  - Get clips from term
  - Compile "episode"
+
+
+== Entities ==
+*These will be fleshed out soon*
+User
+
+Region
+
+Topic
+
+Search Term
+
+Clip
+
+Episode
+
+MetaFlag
+
+GameFlag
+
+WikiNote
