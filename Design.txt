@@ -1,0 +1,46 @@
+BASE USE CASES:
+ - Seed relevance profile
+  - regions of interest
+  - top 3 topics
+
+ - View personalized episodes
+ - View community episodes (based on locations + flags)
+ - View random clip
+ - View moment context
+
+ - Flag moment [relevant, important]
+ - Store moment
+
+ - View your relevance profile
+ - Edit your relevance profile
+
+
+WIKI USE CASES:
+ - View ChronoWiki (alongside the video)
+ - Edit ChronoWiki
+   - CRUD content piece [contradiction, evidence, context, opinion]
+   - Edit transcript
+ - Link moments
+
+
+GAME USE CASES:
+ - Flag lie
+ - Flag truth
+ - Flag hypocrisy
+ - Flag current relevance (on historical content)
+ 
+ - View gamer profile (achievements, level, rank)
+
+
+SOCIAL USE CASES
+ - Link with FB Connect
+ - Share clip
+
+
+SYSTEM USE CASES
+ - CRUD region (state / etc)
+ - CRUD topic
+ - CRUD term
+ - CRUD term association (to region or topic)
+ - Get clips from term
+ - Compile "episode"
