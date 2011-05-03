@@ -1,3 +1,11 @@
+==Fake lightweight "Framework"==
+Read INSTALL for installation instructions
+
+Models are in the models folder
+No controllers, but instead actions are autorouted to the proper page
+URL style is "something.com/?p=[page]&a=[action]
+DIR style is /pages/[page]/[action].php
+
 ==Points of Feedback==
 "My main question is this: what's the use model? Who do we expect to
 use it and what will they want? I can imagine it being very helpful

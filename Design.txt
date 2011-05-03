@@ -48,18 +48,46 @@ SYSTEM USE CASES
 
 
 == Entities ==
-*These will be fleshed out soon*
 User
+ - id
+ - username
+ - password (MD5)
+ - salt
+ - join_date
 
 Region
+ - id
+ - name
+ - code
+ - parent_id
 
 Topic
+ - id
+ - name
+ - code
+ - parent_id
 
-Search Term
+Search
+ - id
+ - user_id
+ - term
+ - date_created
 
 Clip
+ - id
+ - episode_id
+ - order
+ - url
+ - start
+ - end
+ - description
+ - title
+ - search_term_id
 
 Episode
+ - id
+ - user_id
+ - date_created
 
 MetaFlag
 
