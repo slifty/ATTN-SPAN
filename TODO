@@ -1,0 +1,15 @@
+Accounts
+ - [user/register] Account registration
+ - [user/login] Login
+ - [user/logout] Logout
+
+Admin
+ - [admin/regions] Region list editor
+ - [admin/topics] Topic list editor
+
+Searches and Clips
+ - [search/wizard] Profile generations (wizard to create some saved searches)
+ - [search/profile] View and edit your profile
+
+Episodes
+ - [episode/view] Generate and show an episode based on a user's search terms + time frame
