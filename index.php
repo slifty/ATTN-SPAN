@@ -18,6 +18,25 @@
 	<body>
 		<div id="container">
 			<div id="header">
+				<?php
+					if(User::isLoggedIn()) {
+						?>
+						<form method="POST">
+							<input type="hidden" name="logout" value=1 />
+							<input type="submit" value="Log Out" />
+						</form>
+						<?php
+					} else {
+						?>
+						<form method="POST">
+							<input type="text" name="username" value="" />
+							<input type="pass" name="password" value="" />
+							<input type="hidden" name="login" value=1 />
+							<input type="submit" value="Log In" />
+						</form>
+						<?php
+					}
+				?>
 				<div id="login"></div>
 			</div>
 			<div id="main">

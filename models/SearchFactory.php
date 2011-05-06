@@ -1,18 +1,19 @@
 <?php
 require_once("DBConn.php");
-require_once("User.php");
-class UserFactory {
+require_once("Search.php");
+class SearchFactory {
 	public static function getObject($objectID) {
 		$objectID = (int)$objectID;
 		$mysqli = DBConn::mysqli_connect();
 		$dataArray = array();
 		
 		// Load the object data
-		$queryString = "select users.id as userID,
-							   users.username as username,
-							   unix_timestamp(users.join_date) as dateJoined
-						  from users
-						 where users.id = ".$objectID;
+		$queryString = "SELECT searches.id as searchID,
+							   searches.term as term,
+							   searches.interest_id as interestID,
+							   searches.creation_date as dateCreated,
+						  from searches
+						 where searches.id = ".$objectID;
 		
 		$result = $mysqli->query($queryString)
 			or print($mysqli->error);
@@ -25,11 +26,12 @@ class UserFactory {
 		$resultArray = $result->fetch_assoc();
 		$result->free();
 		
-		$dataArray['userID'] = $resultArray['userID'];
-		$dataArray['username'] = $resultArray['username'];
-		$dataArray['dateJoined'] = $resultArray['dateJoined'];
+		$dataArray['searchID'] = $resultArray['searchID'];
+		$dataArray['term'] = $resultArray['term'];
+		$dataArray['interestID'] = $resultArray['interestID'];
+		$dataArray['dateCreated'] = $resultArray['dateCreated'];
 		
-		$newObject = new User();
+		$newObject = new Search();
 		$newObject->load($dataArray);
 		return $newObject;
 	}
@@ -48,30 +50,28 @@ class UserFactory {
 		$dataArrays = array();
 		
 		// Load the object data
-		$queryString = "select users.id as userID,
-							   users.username as username,
-							   users.password as password,
-							   users.salt as salt,
-							   unix_timestamp(users.join_date) as dateJoined
-						  from users
-						 where users.id IN (".$objectIDString.")";
+		$queryString = "SELECT searches.id as searchID,
+							   searches.term as term,
+							   searches.interest_id as interestID,
+							   searches.creation_date as dateCreated
+						  from searches
+						 where searches.id IN (".$objectIDString.")";
 		
 		$result = $mysqli->query($queryString)
 			or print($mysqli->error);
 		while($resultArray = $result->fetch_assoc()) {
 			$dataArray = array();
-			$dataArray['userID'] = $resultArray['userID'];
-			$dataArray['username'] = $resultArray['username'];
-			$dataArray['password'] = $resultArray['password'];
-			$dataArray['salt'] = $resultArray['salt'];
-			$dataArray['dateJoined'] = $resultArray['dateJoined'];
+			$dataArray['searchID'] = $resultArray['searchID'];
+			$dataArray['term'] = $resultArray['term'];
+			$dataArray['interestID'] = $resultArray['interestID'];
+			$dataArray['dateCreated'] = $resultArray['dateCreated'];
 			$dataArrays[] = $dataArray;
 		}
 		
 		// Create the objects
 		$objectArray = array();
 		foreach($dataArrays as $dataArray) {
-			$newObject = new User();
+			$newObject = new Search();
 			$newObject->load($dataArray);
 			$objectArray[] = $newObject;
 		}

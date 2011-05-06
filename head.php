@@ -8,9 +8,8 @@
 	require_once("models/DBConn.php");
 	require_once("models/Clip.php");
 	require_once("models/Episode.php");
-	require_once("models/Region.php");
 	require_once("models/Search.php");
-	require_once("models/Topic.php");
+	require_once("models/Interest.php");
 	require_once("models/User.php");
 	
 	// Log in

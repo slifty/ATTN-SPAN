@@ -1,5 +1,6 @@
 <?php
 require_once("UserFactory.php");
+require_once("InterestFactory.php");
 class User {
 	public static $currentUser; // The user object for the current user
 	
@@ -10,6 +11,9 @@ class User {
 	private $passwordConfirm;
 	private $currentPassword;
 	private $dateJoined;
+	
+	private $addedInterests = array();
+	private $removedInterests = array();
 	
 	# Data Methods
 	public function __construct() {
@@ -38,7 +42,7 @@ class User {
 		$mysqli = DBConn::mysqli_connect();
 		if($this->getUserID() != 0) {
 			// Update an existing user
-			$queryString = "update users
+			$queryString = "UPDATE users
 							   set users.username = '".DBConn::clean_for_mysql($this->getUsername())."',
 								   users.password = ".($this->getPassword() == ""?"users.password":"md5(concat('".md5(DBConn::clean_for_mysql($this->getPassword()))."', users.salt))")."
 							 where users.id = ".$this->getUserID();
@@ -52,7 +56,7 @@ class User {
 			for($i = 0; $i < 32; $i++) $salt .= mt_rand(0,9);
 			$salt = md5($salt);
 			$password = md5(md5($this->getPassword()).$salt);
-			$queryString = "insert into users
+			$queryString = "INSERT into users
 							values (0,
 									'".DBConn::clean_for_mysql($this->getUsername())."',
 									'".DBConn::clean_for_mysql($password)."',
@@ -64,8 +68,25 @@ class User {
 			
 			$this->userID = $mysqli->insert_id;
 		}
-	}
+		
+		// Add new interests
+		foreach($this->addedInterests as $interest) {
+			$queryString = "INSERT into users_interests
+								 values (0,
+										 ".$this->getUserID().",
+										 ".$interest->getInterestID().")";
+			$mysqli->query($queryString);
+		}
 
+		// Remove new interests
+		foreach($this->removedInterests as $interest) {
+			$queryString = "DELETE from users_interests
+								  where users_interests.user_id = ".$this->getUserID()."
+								    and users_interests.interest_id = ".$interest->getInterestID();
+			$mysqli->query($queryString);
+		}
+	}
+	
 	
 	# Getters
 	public function getUserID() { return $this->userID; }
@@ -75,6 +96,21 @@ class User {
 	public function getPassword() { return $this->password; }
 	
 	public function getDateJoined() { return $this->dateJoined; }
+	
+	public function getInterests() {
+		// Return all the interests that this user has flagged
+		$mysqli = DBConn::mysqli_connect();
+		$queryString = "SELECT users_interests.interest_id as interestID
+						  FROM users_interests
+						 WHERE users_interests.user_id = ".$this->getUserID();
+		
+		$result = $mysqli->query($queryString);
+		$interestIDs = array();
+		while($resultArray = $result->fetch_assoc())
+			$interestIDs[] = $resultArray['interestID'];
+		
+		return InterestFactory::getObjects($interestIDs);
+	}
 	
 	
 	# Setters
@@ -87,9 +123,19 @@ class User {
 	public function setCurrentPassword($str) { $this->currentPassword = $str;}
 	
 	
+	# Interest methods
+	public function addInterest($interest) {
+		$this->addedInterests[] = $interest;
+	}
+	
+	public function removeInterest($interests) {
+		$this->removedInterests[] = $interest;
+	}
+	
+	
 	# Static Methods
 	public static function isLoggedIn() {
-		return User::$currentUser->getItemID() != 0;
+		return User::$currentUser->getUserID() != 0;
 	}
 	
 	public static function login($username, $password) {

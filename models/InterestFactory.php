@@ -1,18 +1,20 @@
 <?php
 require_once("DBConn.php");
-require_once("User.php");
-class UserFactory {
+require_once("Interest.php");
+class InterestFactory {
 	public static function getObject($objectID) {
 		$objectID = (int)$objectID;
 		$mysqli = DBConn::mysqli_connect();
 		$dataArray = array();
 		
 		// Load the object data
-		$queryString = "select users.id as userID,
-							   users.username as username,
-							   unix_timestamp(users.join_date) as dateJoined
-						  from users
-						 where users.id = ".$objectID;
+		$queryString = "select interests.id as interestID,
+							   interests.name as name,
+							   interests.code as code,
+							   interests.type as type,
+							   interests.parent_id as parentID
+						  from interests
+						 where interests.id = ".$objectID;
 		
 		$result = $mysqli->query($queryString)
 			or print($mysqli->error);
@@ -25,11 +27,13 @@ class UserFactory {
 		$resultArray = $result->fetch_assoc();
 		$result->free();
 		
-		$dataArray['userID'] = $resultArray['userID'];
-		$dataArray['username'] = $resultArray['username'];
-		$dataArray['dateJoined'] = $resultArray['dateJoined'];
+		$dataArray['interestID'] = $resultArray['interestID'];
+		$dataArray['name'] = $resultArray['name'];
+		$dataArray['code'] = $resultArray['code'];
+		$dataArray['type'] = $resultArray['type'];
+		$dataArray['parentID'] = $resultArray['parentID'];
 		
-		$newObject = new User();
+		$newObject = new Interest();
 		$newObject->load($dataArray);
 		return $newObject;
 	}
@@ -48,30 +52,30 @@ class UserFactory {
 		$dataArrays = array();
 		
 		// Load the object data
-		$queryString = "select users.id as userID,
-							   users.username as username,
-							   users.password as password,
-							   users.salt as salt,
-							   unix_timestamp(users.join_date) as dateJoined
-						  from users
-						 where users.id IN (".$objectIDString.")";
+		$queryString = "select interests.id as interestID,
+							   interests.name as name,
+							   interests.code as code,
+							   interests.type as type,
+							   interests.parent_id as parentID
+						  from interests
+						 where interests.id IN (".$objectIDString.")";
 		
 		$result = $mysqli->query($queryString)
 			or print($mysqli->error);
 		while($resultArray = $result->fetch_assoc()) {
 			$dataArray = array();
-			$dataArray['userID'] = $resultArray['userID'];
-			$dataArray['username'] = $resultArray['username'];
-			$dataArray['password'] = $resultArray['password'];
-			$dataArray['salt'] = $resultArray['salt'];
-			$dataArray['dateJoined'] = $resultArray['dateJoined'];
+			$dataArray['interestID'] = $resultArray['interestID'];
+			$dataArray['name'] = $resultArray['name'];
+			$dataArray['code'] = $resultArray['code'];
+			$dataArray['type'] = $resultArray['type'];
+			$dataArray['parentID'] = $resultArray['parentID'];
 			$dataArrays[] = $dataArray;
 		}
 		
 		// Create the objects
 		$objectArray = array();
 		foreach($dataArrays as $dataArray) {
-			$newObject = new User();
+			$newObject = new Interest();
 			$newObject->load($dataArray);
 			$objectArray[] = $newObject;
 		}
