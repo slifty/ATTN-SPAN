@@ -20,7 +20,7 @@ class SearchFactory {
 		
 		if($result->num_rows == 0) {
 			$result->free();
-			return new User();
+			return new Search();
 		}
 		
 		$resultArray = $result->fetch_assoc();

@@ -21,7 +21,7 @@ class InterestFactory {
 		
 		if($result->num_rows == 0) {
 			$result->free();
-			return new User();
+			return new Interest();
 		}
 		
 		$resultArray = $result->fetch_assoc();

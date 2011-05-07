@@ -6,7 +6,7 @@ class Clip {
 	private $clipID;
 	private $episodeID;
 	private $searchID;
-	private $order;
+	private $clipOrder;
 	private $feedURL;
 	private $contextURL;
 	private $start;
@@ -19,7 +19,7 @@ class Clip {
 		$this->clipID = 0;
 		$this->episodeID = 0;
 		$this->searchID = 0;
-		$this->order = 0;
+		$this->clipOrder = 0;
 		$this->feedURL = "";
 		$this->contextURL = "";
 		$this->start = "";
@@ -32,7 +32,7 @@ class Clip {
 		$this->clipID = $dataArray['clipID'];
 		$this->episodeID = $dataArray['episodeID'];
 		$this->searchID = $dataArray['searchID'];
-		$this->order = $dataArray['order'];
+		$this->clipOrder = $dataArray['clipOrder'];
 		$this->feedURL = $dataArray['feedURL'];
 		$this->contextURL = $dataArray['contextURL'];
 		$this->start = $dataArray['start'];
@@ -55,7 +55,7 @@ class Clip {
 			$queryString = "UPDATE clips
 							   set clips.episode_id = ".$this->getEpisodeID().",
 							       clips.search_term_id = ".$this->getSearchID().",
-							       clips.order = ".$this->getOrder().",
+							       clips.clip_order = ".$this->getClipOrder().",
 								   clips.contextURL = '".DBConn::clean_for_mysql($this->getContextURL())."',
 								   clips.feedURL = '".DBConn::clean_for_mysql($this->getFeedURL())."',
 								   clips.start = '".DBConn::clean_for_mysql($this->getStart())."',
@@ -73,7 +73,7 @@ class Clip {
 							values (0,
 									".$this->getEpisodeID().",
 									".$this->getSearchID().",
-									".$this->getOrder().",
+									".$this->getClipOrder().",
 									'".DBConn::clean_for_mysql($this->getContextURL())."',
 									'".DBConn::clean_for_mysql($this->getFeedURL())."',
 									'".DBConn::clean_for_mysql($this->getStart())."',
@@ -100,7 +100,7 @@ class Clip {
 	
 	public function getContextURL() { return $this->contextURL; }
 	
-	public function getOrder() { return $this->order; }
+	public function getClipOrder() { return $this->clipOrder; }
 	
 	public function getStart() { return $this->start; }
 	
@@ -122,7 +122,7 @@ class Clip {
 	
 	public function setStart($str) { $this->start = $str;}
 	
-	public function setOrder($int) { $this->order = $int;}
+	public function setClipOrder($int) { $this->clipOrder = $int;}
 	
 	public function setEnd($str) { $this->end = $str;}
 	

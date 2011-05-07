@@ -117,7 +117,21 @@ class Episode {
 	
 	public function getClips() {
 		// Returns a list of the clips which make up this episode
-		return array();
+		
+		$mysqli = DBConn::mysqli_connect();
+		$queryString = "select clips.id as clipID
+						  from clips
+						 where clips.episode_id = ".$this->getEpisodeID()."
+					  order by clips.clip_order";
+					
+		$result = $mysqli->query($queryString)
+			or print($mysqli->error);
+		
+		$clipIDs = array();
+		while($resultArray = $result->fetch_assoc())
+			$clipIDs[] = $resultArray['clipID'];
+		
+		return ClipFactory::getObjects($clipIDs);
 	}
 	
 	

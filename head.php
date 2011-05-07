@@ -13,6 +13,7 @@
 	require_once("models/User.php");
 	
 	// Log in
+	User::logout();
 	if(isset($_COOKIE['username']) && isset($_COOKIE['password']))
 		User::login($_COOKIE['username'], $_COOKIE['password']);
 	if(isset($_POST['login']) && isset($_POST['username']) && isset($_POST['password']))

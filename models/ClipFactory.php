@@ -11,7 +11,7 @@ class ClipFactory {
 		$queryString = "select clips.id as clipID,
 							   clips.episode_id as episodeID,
 							   clips.search_term_id as searchID,
-							   clips.order as order,
+							   clips.clip_order as clipOrder,
 							   clips.feed_url as feedURL,
 							   clips.context_url as contextURL,
 							   clips.start as start,
@@ -26,7 +26,7 @@ class ClipFactory {
 		
 		if($result->num_rows == 0) {
 			$result->free();
-			return new User();
+			return new Clip();
 		}
 		
 		$resultArray = $result->fetch_assoc();
@@ -35,7 +35,7 @@ class ClipFactory {
 		$dataArray['clipID'] = $resultArray['clipID'];
 		$dataArray['episodeID'] = $resultArray['episodeID'];
 		$dataArray['searchID'] = $resultArray['searchID'];
-		$dataArray['order'] = $resultArray['order'];
+		$dataArray['clipOrder'] = $resultArray['clipOrder'];
 		$dataArray['feedURL'] = $resultArray['feedURL'];
 		$dataArray['contextURL'] = $resultArray['contextURL'];
 		$dataArray['start'] = $resultArray['start'];
@@ -65,7 +65,7 @@ class ClipFactory {
 		$queryString = "select clips.id as clipID,
 							   clips.episode_id as episodeID,
 							   clips.search_term_id as searchID,
-							   clips.order as order,
+							   clips.clip_order as clipOrder,
 							   clips.feed_url as feedURL,
 							   clips.context_url as contextURL,
 							   clips.start as start,
@@ -82,7 +82,7 @@ class ClipFactory {
 			$dataArray['clipID'] = $resultArray['clipID'];
 			$dataArray['episodeID'] = $resultArray['episodeID'];
 			$dataArray['searchID'] = $resultArray['searchID'];
-			$dataArray['order'] = $resultArray['order'];
+			$dataArray['clipOrder'] = $resultArray['clipOrder'];
 			$dataArray['feedURL'] = $resultArray['feedURL'];
 			$dataArray['contextURL'] = $resultArray['contextURL'];
 			$dataArray['start'] = $resultArray['start'];

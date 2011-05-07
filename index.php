@@ -4,12 +4,16 @@
 		<title>ATTN-SPAN: Because nobody cares THAT much about congress</title>
 		
 		<link rel="stylesheet" href="styles/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="styles/attnPlayer.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		
 		<?PHP
 			$file = "pages/".$p."/".$a.".css";
 			if(file_exists($file)) { ?><script src="<?php echo($file); ?>" type="text/javascript" charset="utf-8"></script> <?php }
 		?>
 		
 		<script src="scripts/jquery-1.5.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="scripts/attnPlayer.js" type="text/javascript" charset="utf-8"></script>
+		
 		<?PHP
 			$file = "pages/".$p."/".$a.".js";
 			if(file_exists($file)) { ?><script src="<?php echo($file); ?>" type="text/javascript" charset="utf-8"></script> <?php }
