@@ -179,7 +179,7 @@ class Episode {
 		$result = $mysqli->query($queryString)
 			or print($mysqli->error);
 		
-		$resultArray = $result->fetch_assoc()
+		$resultArray = $result->fetch_assoc();
 		
 		return (int)$resultArray['clipCount'];
 	}
