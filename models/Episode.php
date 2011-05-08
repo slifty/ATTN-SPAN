@@ -40,7 +40,7 @@ class Episode {
 		$result = $mysqli->query($queryString);
 		$resultArray = $result->fetch_assoc();
 		
-		if($resultArray['episodeCount'] > 0);
+		if($resultArray['episodeCount'] > 0)
 			return false;
 		
 		return true;
@@ -64,14 +64,14 @@ class Episode {
 				or print($mysqli->error);
 		}
 		else {
-			// Create a new interest
+			// Create a new episode
 			$queryString = "INSERT into episodes
 							values (0,
 									".$this->getUserID().",
 									'".DBConn::clean_for_mysql($this->getTitle())."',
-									'".DBConn::clean_for_mysql($this->getThumbnail()).",
+									'".DBConn::clean_for_mysql($this->getThumbnail())."',
 									'".date('Y-m-d H:i:s',$this->getDateBased())."',
-									NOW()')";
+									NOW())";
 			
 			$mysqli->query($queryString)
 				or print($mysqli->error);
@@ -86,8 +86,11 @@ class Episode {
 			return;
 			
 		// Make sure this episode doesn't already have clips
-		if(sizeof($this->getClips()) > 0)
+		if($this->getClipCount() > 0)
 			return;
+		
+		echo("asfasdfas");
+
 		
 		// Generates a list of the episode clips
 		$user = UserFactory::getObject($this->getUserID());
