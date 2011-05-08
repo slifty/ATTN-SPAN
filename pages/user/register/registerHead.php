@@ -12,7 +12,6 @@
 		$newUser->setPasswordConfirm($_POST['passwordConfirm']);
 		
 		foreach($_POST['regions'] as $interestID) {
-			echo($interestID);
 			$interest = InterestFactory::getObject($interestID);
 			$newUser->addInterest($interest);
 		}
