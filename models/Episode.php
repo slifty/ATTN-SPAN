@@ -25,6 +25,20 @@ class Episode {
 	}
 	
 	public function validate() {
+		$mysqli = DBConn::mysqli_connect();
+		
+		// Make sure this user doesn't already have an episode for this date
+		$queryString = "select count(*) as episodeCount
+						  from episodes
+						 where episodes.user_id = ".$this->getUserID()."
+						   and episodes.based_date = ".$this->getDateBased()."
+						   and episodes.id != ".$this->getEpisodeID();
+		$result = $mysqli->query($queryString);
+		$resultArray = $result->fetch_assoc();
+		
+		if($resultArray['episodeCount'] > 0);
+			return false;
+		
 		return true;
 	}
 	
@@ -59,6 +73,14 @@ class Episode {
 	}
 	
 	public function generate() {
+		// Make sure this is a saved episode
+		if($this->getEpisodeID() == 0)
+			return;
+			
+		// Make sure this episode doesn't already have clips
+		if(sizeof($this->getClips()) > 0)
+			return;
+		
 		// Generates a list of the episode clips
 		$user = UserFactory::getObject($this->getUserID());
 		$interests = $user->getInterests();
@@ -87,6 +109,15 @@ class Episode {
 			curl_close($ch); 
 			
 			$xmlObj = new SimpleXMLElement($xmlStr);
+			
+						
+			echo("</br >");
+			echo("</br >");
+			echo("</br >");
+			echo("</br >");
+			print_r($xmlObj);
+
+
 			$items = $xmlObj->channel->item;
 			foreach($items as $item) {
 				$title = $item->title;
@@ -97,7 +128,6 @@ class Episode {
 				$clip->setFeedURL($item->enclosure['url']);
 				$clip->setContextURL($item->link);
 				$clip->setTitle($item->title);
-				$clip->setDescription($item->description);
 				$clip->save();
 			}
 		}

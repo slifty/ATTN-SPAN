@@ -142,7 +142,19 @@ switch($version) {
 		echo("Updating app version\n");
 		$mysqli->query("DELETE from appinfo") or print($mysqli->error);
 		$mysqli->query("INSERT into appinfo (version) values ('8');") or print($mysqli->error);
-	
+		
+	case 8: 
+		echo("Updating episodes table\n");
+		$mysqli->query("ALTER table episodes
+						  add column title varchar(255),
+						  add column thumbnail varchar(255)") or print($mysqli->error);
+		echo("Updating clips table\n");
+		$mysqli->query("ALTER table clips
+						  add column thumbnail varchar(255)") or print($mysqli->error);
+		echo("Updating app version\n");
+		$mysqli->query("DELETE from appinfo") or print($mysqli->error);
+		$mysqli->query("INSERT into appinfo (version) values ('9');") or print($mysqli->error);
+		
 	default:
 		echo("Finished updating the schema\n");
 }

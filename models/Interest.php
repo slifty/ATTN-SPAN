@@ -3,6 +3,10 @@ require_once("InterestFactory.php");
 require_once("SearchFactory.php");
 class Interest {
 	
+	# Class Contants
+	const REGION = 'r';
+	const TOPIC = 't';
+	
 	# Instance Variables
 	private $interestID;
 	private $name;
@@ -103,13 +107,15 @@ class Interest {
 	# Static Methods
 	public static function getInterests($interestType = '') {
 		$mysqli = DBConn::mysqli_connect();
-		$queryString = "select interests.interestID as interests
+		$queryString = "select interests.id as interestID
 						  from interests
 						 where interests.type = '".DBConn::clean_for_mysql($interestType)."'
 						    or '' = '".DBConn::clean_for_mysql($interestType)."'
 					  order by interests.name";
 					
-		$result = $mysqli->query($queryString);
+		$result = $mysqli->query($queryString)
+			or print($mysqli->error);
+		
 		$interestIDs = array();
 		while($resultArray = $result->fetch_assoc())
 			$interestIDs[] = $resultArray['interestID'];

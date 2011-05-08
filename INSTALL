@@ -1,3 +1,4 @@
 cp conf-default.php conf.php
 edit conf.php
 php install.php
+php datarake.php

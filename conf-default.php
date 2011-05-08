@@ -1,9 +1,13 @@
+// Time settings
+date_default_timezone_set("America/New_York");
+
 // DB Settings
-global $DB_HOST, $DB_USER, $DB_PASS;
-$DB_HOST = "";
-$DB_USER = "";
-$DB_PASS = "";
+global $MYSQLHOST, $MYSQLUSER, $MYSQLPASS, $MYSQLDB;
+$MYSQLHOST = "";
+$MYSQLUSER = "";
+$MYSQLPASS = "";
+$MYSQLDB = "";
 
 // Site Settings
-global $SITE_ROOT;
-$SITE_ROOT = "/~slifty/cspan";
+global $SITEROOT;
+$SITEROOT = "/~slifty/cspan";

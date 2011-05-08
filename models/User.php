@@ -1,6 +1,7 @@
 <?php
 require_once("UserFactory.php");
 require_once("InterestFactory.php");
+require_once("EpisodeFactory.php");
 class User {
 	public static $currentUser; // The user object for the current user
 	
@@ -110,6 +111,21 @@ class User {
 			$interestIDs[] = $resultArray['interestID'];
 		
 		return InterestFactory::getObjects($interestIDs);
+	}
+	
+	public function getEpisodes() {
+		// Return all the episodes for this user
+		$mysqli = DBConn::mysqli_connect();
+		$queryString = "SELECT episodes.id as episodeID
+						  FROM episodes
+						 WHERE episodes.user_id = ".$this->getUserID();
+		
+		$result = $mysqli->query($queryString);
+		$episodeIDs = array();
+		while($resultArray = $result->fetch_assoc())
+			$episodeIDs[] = $resultArray['episodeID'];
+		
+		return EpisodeFactory::getObjects($episodeIDs);
 	}
 	
 	
