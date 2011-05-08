@@ -8,6 +8,8 @@ class Episode {
 	private $episodeID;
 	private $userID;
 	private $dateCreated;
+	private $title;
+	private $thumbnail;
 	
 	# Data Methods
 	public function __construct() {
@@ -22,6 +24,8 @@ class Episode {
 		$this->userID = $dataArray['userID'];
 		$this->dateBased = $dataArray['dateBased'];
 		$this->dateCreated = $dataArray['dateCreated'];
+		$this->dateCreated = $dataArray['title'];
+		$this->dateCreated = $dataArray['thumbnail'];
 	}
 	
 	public function validate() {
@@ -51,6 +55,8 @@ class Episode {
 			// Update an existing episode
 			$queryString = "UPDATE episodes
 							   set episodes.user_id = ".$this->getUserID().",
+							       episodes.title = '".DBConn::clean_for_mysql($this->getTitle())."',
+							       episodes.thumbnail = '".DBConn::clean_for_mysql($this->getThumbnail())."',
 							       episodes.based_date = ".$this->getDateBased()."
 							 where episodes.id = ".$this->getEpisodeID();
 						
@@ -62,8 +68,10 @@ class Episode {
 			$queryString = "INSERT into episodes
 							values (0,
 									".$this->getUserID().",
+									'".DBConn::clean_for_mysql($this->getTitle())."',
+									'".DBConn::clean_for_mysql($this->getThumbnail()).",
 									'".date('Y-m-d H:i:s',$this->getDateBased())."',
-									NOW())";
+									NOW()')";
 			
 			$mysqli->query($queryString)
 				or print($mysqli->error);
@@ -110,14 +118,6 @@ class Episode {
 			
 			$xmlObj = new SimpleXMLElement($xmlStr);
 			
-						
-			echo("</br >");
-			echo("</br >");
-			echo("</br >");
-			echo("</br >");
-			print_r($xmlObj);
-
-
 			$items = $xmlObj->channel->item;
 			foreach($items as $item) {
 				$title = $item->title;
@@ -140,6 +140,10 @@ class Episode {
 	public function getEpisodeID() { return $this->episodeID; }
 	
 	public function getUserID() { return $this->userID; }
+	
+	public function getTitle() { return $this->title; }
+	
+	public function getThumbnail() { return $this->thumbnail; }
 	
 	public function getDateCreated() { return $this->dateCreated; }
 	
@@ -164,9 +168,29 @@ class Episode {
 		return ClipFactory::getObjects($clipIDs);
 	}
 	
+	public function getClipCount() {
+		// Returns a list of the clips which make up this episode
+		
+		$mysqli = DBConn::mysqli_connect();
+		$queryString = "select count(clips.id) as clipCount
+						  from clips
+						 where clips.episode_id = ".$this->getEpisodeID();
+					
+		$result = $mysqli->query($queryString)
+			or print($mysqli->error);
+		
+		$resultArray = $result->fetch_assoc()
+		
+		return (int)$resultArray['clipCount'];
+	}
+	
 	
 	# Setters
 	public function setUserID($int) { $this->userID = $int;}
+	
+	public function setTitle($str) { $this->title = $str;}
+	
+	public function setThumbnail($str) { $this->thumbnail = $str;}
 	
 	public function setDateBased($timestamp) { $this->dateBased = $timestamp;}
 }

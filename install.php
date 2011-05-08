@@ -146,11 +146,11 @@ switch($version) {
 	case 8: 
 		echo("Updating episodes table\n");
 		$mysqli->query("ALTER table episodes
-						  add column title varchar(255),
-						  add column thumbnail varchar(255)") or print($mysqli->error);
+						  add column title varchar(255) after user_id,
+						  add column thumbnail varchar(255) after title") or print($mysqli->error);
 		echo("Updating clips table\n");
 		$mysqli->query("ALTER table clips
-						  add column thumbnail varchar(255)") or print($mysqli->error);
+						  add column thumbnail varchar(255) after title") or print($mysqli->error);
 		echo("Updating app version\n");
 		$mysqli->query("DELETE from appinfo") or print($mysqli->error);
 		$mysqli->query("INSERT into appinfo (version) values ('9');") or print($mysqli->error);

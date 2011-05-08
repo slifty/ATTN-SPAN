@@ -13,6 +13,7 @@ class Clip {
 	private $end;
 	private $description;
 	private $title;
+	private $thumbnail;
 	
 	# Data Methods
 	public function __construct() {
@@ -26,6 +27,7 @@ class Clip {
 		$this->end = "";
 		$this->description = "";
 		$this->title = "";
+		$this->thumbnail = "";
 	}
 	
 	public function load($dataArray) {
@@ -39,6 +41,7 @@ class Clip {
 		$this->end = $dataArray['end'];
 		$this->description = $dataArray['description'];
 		$this->title = $dataArray['title'];
+		$this->thumbnail = $dataArray['thumbnail'];
 	}
 	
 	public function validate() {
@@ -61,7 +64,8 @@ class Clip {
 								   clips.start = '".DBConn::clean_for_mysql($this->getStart())."',
 								   clips.end = '".DBConn::clean_for_mysql($this->getEnd())."',
 								   clips.description = '".DBConn::clean_for_mysql($this->getDescription())."',
-								   clips.title = '".DBConn::clean_for_mysql($this->getTitle())."'
+								   clips.title = '".DBConn::clean_for_mysql($this->getTitle())."',
+								   clips.thumbnail = '".DBConn::clean_for_mysql($this->getThumbnail())."'
 							 where clips.id = ".$this->getClipID();
 						
 			$mysqli->query($queryString)
@@ -79,7 +83,8 @@ class Clip {
 									'".DBConn::clean_for_mysql($this->getStart())."',
 									'".DBConn::clean_for_mysql($this->getEnd())."',
 									'".DBConn::clean_for_mysql($this->getDescription())."',
-									'".DBConn::clean_for_mysql($this->getTitle())."')";
+									'".DBConn::clean_for_mysql($this->getTitle())."',
+									'".DBConn::clean_for_mysql($this->getThumbnail())."')";
 			
 			$mysqli->query($queryString)
 				or print($mysqli->error);
@@ -109,6 +114,8 @@ class Clip {
 	public function getDescription() { return $this->description; }
 	
 	public function getTitle() { return $this->title; }
+	
+	public function getThumbnail() { return $this->thumbnail; }
 		
 	
 	# Setters
@@ -129,6 +136,8 @@ class Clip {
 	public function setDescription($str) { $this->description = $str;}
 	
 	public function setTitle($str) { $this->title = $str;}
+	
+	public function setThumbnail($str) { $this->thumbnail = $str;}
 }
 
 ?>

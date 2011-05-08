@@ -10,6 +10,8 @@ class EpisodeFactory {
 		// Load the object data
 		$queryString = "select episodes.id as episodeID,
 							   episodes.user_id as userID,
+							   episodes.title as title,
+							   episodes.thumbnail as thumbnail,
 							   episodes.based_date as dateBased,
 							   episodes.creation_date as dateCreated
 						  from episodes
@@ -28,6 +30,8 @@ class EpisodeFactory {
 		
 		$dataArray['episodeID'] = $resultArray['episodeID'];
 		$dataArray['userID'] = $resultArray['userID'];
+		$dataArray['title'] = $resultArray['title'];
+		$dataArray['thumbnail'] = $resultArray['thumbnail'];
 		$dataArray['dateBased'] = $resultArray['dateBased'];
 		$dataArray['dateCreated'] = $resultArray['dateCreated'];
 		
@@ -52,6 +56,8 @@ class EpisodeFactory {
 		// Load the object data
 		$queryString = "select episodes.id as episodeID,
 							   episodes.user_id as userID,
+							   episodes.title as title,
+							   episodes.thumbnail as thumbnail,
 							   episodes.based_date as dateBased,
 							   episodes.creation_date as dateCreated
 						  from episodes
@@ -63,6 +69,8 @@ class EpisodeFactory {
 			$dataArray = array();
 			$dataArray['episodeID'] = $resultArray['episodeID'];
 			$dataArray['userID'] = $resultArray['userID'];
+			$dataArray['title'] = $resultArray['title'];
+			$dataArray['thumbnail'] = $resultArray['thumbnail'];
 			$dataArray['dateBased'] = $resultArray['dateBased'];
 			$dataArray['dateCreated'] = $resultArray['dateCreated'];
 			$dataArrays[] = $dataArray;

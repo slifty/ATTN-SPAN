@@ -17,7 +17,8 @@ class ClipFactory {
 							   clips.start as start,
 							   clips.end as end,
 							   clips.description as description,
-							   clips.title as title
+							   clips.title as title,
+							   clips.thumbnail as thumbnail
 						  from clips
 						 where clips.id = ".$objectID;
 		
@@ -42,6 +43,7 @@ class ClipFactory {
 		$dataArray['end'] = $resultArray['end'];
 		$dataArray['description'] = $resultArray['description'];
 		$dataArray['title'] = $resultArray['title'];
+		$dataArray['thumbnail'] = $resultArray['thumbnail'];
 		
 		$newObject = new Clip();
 		$newObject->load($dataArray);
@@ -71,7 +73,8 @@ class ClipFactory {
 							   clips.start as start,
 							   clips.end as end,
 							   clips.description as description,
-							   clips.title as title
+							   clips.title as title,
+							   clips.thumbnail as thumbnail
 						  from clips
 						 where clips.id IN (".$objectIDString.")";
 		
@@ -89,6 +92,7 @@ class ClipFactory {
 			$dataArray['end'] = $resultArray['end'];
 			$dataArray['description'] = $resultArray['description'];
 			$dataArray['title'] = $resultArray['title'];
+			$dataArray['thumbnail'] = $resultArray['thumbnail'];
 			$dataArrays[] = $dataArray;
 		}
 		
