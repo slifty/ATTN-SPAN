@@ -93,7 +93,7 @@
 				return;
 			
 			var clip = clipList[clipID];
-			$videoEl = $("<video controls />");
+			$videoEl = $("<video controls preload />");
 			$videoEl.attr("id", "clip" + clipID);
 			
 			$videoEl.bind("play", function() {
