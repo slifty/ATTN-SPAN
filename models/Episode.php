@@ -29,8 +29,6 @@ class Episode {
 	}
 	
 	public function validate() {
-		return true;
-		
 		$mysqli = DBConn::mysqli_connect();
 		
 		// Make sure this user doesn't already have an episode for this date
