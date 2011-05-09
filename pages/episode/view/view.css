@@ -1,0 +1,22 @@
+.attn-clip {
+	display: none;
+}
+.attn-clip.active {
+	display: block;
+}
+
+.attn-player {}
+.attn-video-container {}
+
+.attn-timeline { width: 400px;}
+
+
+.attn-timeline-clip { display: inline-block; border: 3px solid #660000; margin: 5px;}
+.attn-timeline-clip img {height: 50px;}
+.attn-timeline-clip.loaded { border: 3px solid #000066; }
+.attn-timeline-clip.active { border: 3px solid #006600; }
+
+.attn-information {}
+.attn-information-title {}
+.attn-information-description {}
+.attn-information-context {}

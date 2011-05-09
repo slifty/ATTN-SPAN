@@ -117,18 +117,6 @@ $searchTerm->setInterestID($region->getInterestID());
 $searchTerm->setTerm("Delaware");
 $searchTerm->save();
 
-$region = new Interest();
-$region->setName("DISTRICT OF COLUMBIA");
-$region->setCode("USA/DC");
-$region->setType(Interest::REGION);
-$region->setParentID($regionUSA->getInterestID());
-$region->save();
-
-$searchTerm = new Search();
-$searchTerm->setInterestID($region->getInterestID());
-$searchTerm->setTerm("Delaware");
-$searchTerm->save();
-
 // FLORIDA                         FL
 // GEORGIA                         GA
 // GUAM                            GU

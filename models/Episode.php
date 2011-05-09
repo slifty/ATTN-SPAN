@@ -24,11 +24,13 @@ class Episode {
 		$this->userID = $dataArray['userID'];
 		$this->dateBased = $dataArray['dateBased'];
 		$this->dateCreated = $dataArray['dateCreated'];
-		$this->dateCreated = $dataArray['title'];
-		$this->dateCreated = $dataArray['thumbnail'];
+		$this->title = $dataArray['title'];
+		$this->thumbnail = $dataArray['thumbnail'];
 	}
 	
 	public function validate() {
+		return true;
+		
 		$mysqli = DBConn::mysqli_connect();
 		
 		// Make sure this user doesn't already have an episode for this date
@@ -89,9 +91,6 @@ class Episode {
 		if($this->getClipCount() > 0)
 			return;
 		
-		echo("asfasdfas");
-
-		
 		// Generates a list of the episode clips
 		$user = UserFactory::getObject($this->getUserID());
 		$interests = $user->getInterests();
@@ -121,16 +120,42 @@ class Episode {
 			
 			$xmlObj = new SimpleXMLElement($xmlStr);
 			
-			$items = $xmlObj->channel->item;
+			$items = $xmlObj->xpath ('channel/item');
+			
 			foreach($items as $item) {
-				$title = $item->title;
+				$thumbnail = $item->xpath ('media:thumbnail');
+				$content = $item->xpath ('media:group/media:content');
+				
+				// Generate the context URL
+				$parts = explode('/',$item->link);
+				$end = array_pop($parts);
+				$contextEnd = explode(':', $end);
+				$start = array_pop($parts);
+				$contextStart = explode(':', $start);
+				$base = implode('/',$parts);
+				
+				// Move the start back ~1 minute
+				$contextStart[1] = max(0, (int)$contextStart[1] - 1);
+				$contextStart[2] = 0;
+				$contextStart = implode(':',$contextStart);
+				
+				// Move the end forward ~1 minute
+				$contextEnd[1] = min(59, (int)$contextEnd[1] + 1);
+				$contextEnd[2] = 59;
+				$contextEnd = implode(':',$contextEnd);
+				
+				// Build the context URL
+				$context = $base."/".$contextStart."/".$contextEnd;
 				
 				$clip = new Clip();
 				$clip->setEpisodeID($this->getEpisodeID());
 				$clip->setSearchID($search->getSearchID());
-				$clip->setFeedURL($item->enclosure['url']);
-				$clip->setContextURL($item->link);
+				$clip->setFeedURL($content['0']['url']);
+				$clip->setContextURL($context);
 				$clip->setTitle($item->title);
+				$clip->setStart($start);
+				$clip->setEnd($end);
+				$clip->setThumbnail($thumbnail['0']['url']);
 				$clip->save();
 			}
 		}

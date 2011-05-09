@@ -9,7 +9,6 @@
 		
 		<link rel="stylesheet" href="styles/jquery-ui-1.8.12.css" type="text/css" media="screen" title="no title" charset="utf-8">
 		<link rel="stylesheet" href="styles/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="styles/attnPlayer.css" type="text/css" media="screen" title="no title" charset="utf-8">
 		
 		<?php
 			$file = "pages/".$p."/".$a."/".$a.".css";
@@ -18,7 +17,6 @@
 		
 		<script src="scripts/jquery-1.5.2.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="scripts/jquery-ui-1.8.12.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="scripts/attnPlayer.js" type="text/javascript" charset="utf-8"></script>
 		
 		<?php
 			$file = "pages/".$p."/".$a."/".$a.".js";

@@ -14,6 +14,7 @@
 		$episode = new Episode();
 		$episode->setUserID(User::$currentUser->getUserID());
 		$episode->setDateBased($time);
+		$episode->setTitle(date("M jS, Y",$time));
 		$episode->save();
 		$episode->generate();
 	}

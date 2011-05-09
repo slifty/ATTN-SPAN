@@ -18,6 +18,7 @@
 					$clipArray['contextURL'] = $clip->getContextURL();
 					$clipArray['title'] = $clip->getTitle();
 					$clipArray['description'] = $clip->getDescription();
+					$clipArray['thumbnail'] = html_entity_decode($clip->getThumbnail());
 					$encodedClips[] = json_encode($clipArray);
 				}
 			?>

@@ -12,7 +12,10 @@
 	} else {
 		foreach($episodes as $episode) {
 			?>
-			<div class='episode'><a href="?p=episode&a=view&e=<?php echo($episode->getEpisodeID());?>">View Episode <?php echo($episode->getDateBased());?></a></div>
+			<div class='episode'>
+				<div class="title"><a href="?p=episode&a=view&e=<?php echo($episode->getEpisodeID());?>"><?php echo($episode->getTitle());?></a></div>
+				<div class="clipCount"><?php echo(($episode->getClipCount() == 1)?"1 clip":$episode->getClipCount()." clips"); ?></div>
+			</div>
 			<?php
 		}
 	}
