@@ -113,19 +113,57 @@ class User {
 		return InterestFactory::getObjects($interestIDs);
 	}
 	
-	public function getEpisodes() {
+	public function getEpisodes($requireContent = false) {
 		// Return all the episodes for this user
 		$mysqli = DBConn::mysqli_connect();
 		$queryString = "SELECT episodes.id as episodeID
 						  FROM episodes
 						 WHERE episodes.user_id = ".$this->getUserID();
 		
-		$result = $mysqli->query($queryString);
+		if($requireContent)
+			$queryString = "SELECT distinct episodes.id as episodeID
+							  FROM episodes
+							  JOIN clips ON (clips.episode_id = episodes.id)
+							 WHERE episodes.user_id = ".$this->getUserID();
+		
+		$result = $mysqli->query($queryString) or print($mysqli->error);
 		$episodeIDs = array();
 		while($resultArray = $result->fetch_assoc())
 			$episodeIDs[] = $resultArray['episodeID'];
 		
 		return EpisodeFactory::getObjects($episodeIDs);
+	}
+	
+	public function getFirstEpisode() {
+		$mysqli = DBConn::mysqli_connect();
+		$queryString = "SELECT episodes.id as episodeID
+						  FROM episodes
+						 WHERE episodes.user_id = ".$this->getUserID()."
+					  ORDER BY episodes.based_date
+					     LIMIT 0,1" ;
+		
+		$result = $mysqli->query($queryString) or print($mysqli->error);
+		if($result->num_rows == 0)
+			return null;
+		
+		$resultArray = $result->fetch_assoc();
+		return EpisodeFactory::getObject($resultArray['episodeID']);
+	}
+	
+	public function getLastEpisode() {
+		$mysqli = DBConn::mysqli_connect();
+		$queryString = "SELECT episodes.id as episodeID
+						  FROM episodes
+						 WHERE episodes.user_id = ".$this->getUserID()."
+					  ORDER BY episodes.based_date desc
+					     LIMIT 0,1" ;
+		
+		$result = $mysqli->query($queryString);
+		if($result->num_rows == 0)
+			return null;
+		
+		$resultArray = $result->fetch_assoc();
+		return EpisodeFactory::getObject($resultArray['episodeID']);
 	}
 	
 	

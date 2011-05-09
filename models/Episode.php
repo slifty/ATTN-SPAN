@@ -2,12 +2,15 @@
 require_once("EpisodeFactory.php");
 require_once("UserFactory.php");
 require_once("ClipFactory.php");
+require_once("SourceFactory.php");
+
 class Episode {
 	
 	# Instance Variables
 	private $episodeID;
 	private $userID;
 	private $dateCreated;
+	private $dateBased;
 	private $title;
 	private $thumbnail;
 	
@@ -35,7 +38,7 @@ class Episode {
 		$queryString = "select count(*) as episodeCount
 						  from episodes
 						 where episodes.user_id = ".$this->getUserID()."
-						   and episodes.based_date = ".$this->getDateBased()."
+						   and episodes.based_date = '".date('Y-m-d',$this->getDateBased())."'
 						   and episodes.id != ".$this->getEpisodeID();
 		$result = $mysqli->query($queryString);
 		$resultArray = $result->fetch_assoc();
@@ -57,7 +60,7 @@ class Episode {
 							   set episodes.user_id = ".$this->getUserID().",
 							       episodes.title = '".DBConn::clean_for_mysql($this->getTitle())."',
 							       episodes.thumbnail = '".DBConn::clean_for_mysql($this->getThumbnail())."',
-							       episodes.based_date = ".$this->getDateBased()."
+							       episodes.based_date = '".date('Y-m-d',$this->getDateBased())."'
 							 where episodes.id = ".$this->getEpisodeID();
 						
 			$mysqli->query($queryString)
@@ -70,7 +73,7 @@ class Episode {
 									".$this->getUserID().",
 									'".DBConn::clean_for_mysql($this->getTitle())."',
 									'".DBConn::clean_for_mysql($this->getThumbnail())."',
-									'".date('Y-m-d H:i:s',$this->getDateBased())."',
+									'".date('Y-m-d',$this->getDateBased())."',
 									NOW())";
 			
 			$mysqli->query($queryString)
@@ -120,16 +123,18 @@ class Episode {
 			
 			$items = $xmlObj->xpath ('channel/item');
 			
+			$order = 0;
 			foreach($items as $item) {
+				$order -= 1; // We get these in reverse chronological order;
 				$thumbnail = $item->xpath ('media:thumbnail');
 				$content = $item->xpath ('media:group/media:content');
 				
 				// Generate the context URL
 				$parts = explode('/',$item->link);
-				$end = array_pop($parts);
-				$contextEnd = explode(':', $end);
-				$start = array_pop($parts);
-				$contextStart = explode(':', $start);
+				$end = explode(':', array_pop($parts));
+				$contextEnd = $end;
+				$start = explode(':', array_pop($parts));
+				$contextStart = $start;
 				$base = implode('/',$parts);
 				
 				// Move the start back ~1 minute
@@ -145,14 +150,24 @@ class Episode {
 				// Build the context URL
 				$context = $base."/".$contextStart."/".$contextEnd;
 				
+				// Get the source
+				$source = Source::getSourceByURL($base);
+				if($source == null) {
+					$source = new Source();
+					$source->setURL($base);
+					$source->save();
+				}
+				
 				$clip = new Clip();
 				$clip->setEpisodeID($this->getEpisodeID());
+				$clip->setClipOrder($order);
 				$clip->setSearchID($search->getSearchID());
+				$clip->setSourceID($source->getSourceID());
 				$clip->setFeedURL($content['0']['url']);
 				$clip->setContextURL($context);
 				$clip->setTitle($item->title);
-				$clip->setStart($start);
-				$clip->setEnd($end);
+				$clip->setStart((int)$start[2] + 60 * (int)$start[1] + 60 * 60 * (int)$start[0]);
+				$clip->setEnd((int)$end[2] + 60 * (int)$end[1] + 60 * 60 * (int)$end[0]);
 				$clip->setThumbnail($thumbnail['0']['url']);
 				$clip->save();
 			}

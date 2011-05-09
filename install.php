@@ -155,13 +155,25 @@ switch($version) {
 		$mysqli->query("DELETE from appinfo") or print($mysqli->error);
 		$mysqli->query("INSERT into appinfo (version) values ('9');") or print($mysqli->error);
 		
-	case 9: 
+	case 9:
 		echo("Updating episodes table\n");
 		$mysqli->query("ALTER table episodes
 					   change column based_date based_date date") or print($mysqli->error);
 		echo("Updating app version\n");
 		$mysqli->query("DELETE from appinfo") or print($mysqli->error);
 		$mysqli->query("INSERT into appinfo (version) values ('10');") or print($mysqli->error);
+		
+	case 10:
+		echo("Creating sources table\n");
+		$mysqli->query("CREATE table sources (id int auto_increment primary key,
+											url varchar(255))") or print($mysqli->error);
+		echo("Updating clips table\n");
+		$mysqli->query("ALTER table clips
+						  add column source_id int after search_term_id") or print($mysqli->error);
+		echo("Updating app version\n");
+		$mysqli->query("DELETE from appinfo") or print($mysqli->error);
+		$mysqli->query("INSERT into appinfo (version) values ('11');") or print($mysqli->error);
+		
 	default:
 		echo("Finished updating the schema\n");
 }

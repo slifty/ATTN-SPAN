@@ -11,6 +11,7 @@
 	require_once("models/Search.php");
 	require_once("models/Interest.php");
 	require_once("models/User.php");
+	require_once("models/Source.php");
 	
 	// Log in
 	User::logout();

@@ -6,6 +6,7 @@ class Clip {
 	private $clipID;
 	private $episodeID;
 	private $searchID;
+	private $sourceID;
 	private $clipOrder;
 	private $feedURL;
 	private $contextURL;
@@ -20,6 +21,7 @@ class Clip {
 		$this->clipID = 0;
 		$this->episodeID = 0;
 		$this->searchID = 0;
+		$this->sourceID = 0;
 		$this->clipOrder = 0;
 		$this->feedURL = "";
 		$this->contextURL = "";
@@ -34,6 +36,7 @@ class Clip {
 		$this->clipID = $dataArray['clipID'];
 		$this->episodeID = $dataArray['episodeID'];
 		$this->searchID = $dataArray['searchID'];
+		$this->sourceID = $dataArray['sourceID'];
 		$this->clipOrder = $dataArray['clipOrder'];
 		$this->feedURL = $dataArray['feedURL'];
 		$this->contextURL = $dataArray['contextURL'];
@@ -58,6 +61,7 @@ class Clip {
 			$queryString = "UPDATE clips
 							   set clips.episode_id = ".$this->getEpisodeID().",
 							       clips.search_term_id = ".$this->getSearchID().",
+							       clips.source_id = ".$this->getSourceID().",
 							       clips.clip_order = ".$this->getClipOrder().",
 								   clips.contextURL = '".DBConn::clean_for_mysql($this->getContextURL())."',
 								   clips.feedURL = '".DBConn::clean_for_mysql($this->getFeedURL())."',
@@ -77,6 +81,7 @@ class Clip {
 							values (0,
 									".$this->getEpisodeID().",
 									".$this->getSearchID().",
+									".$this->getSourceID().",
 									".$this->getClipOrder().",
 									'".DBConn::clean_for_mysql($this->getContextURL())."',
 									'".DBConn::clean_for_mysql($this->getFeedURL())."',
@@ -101,6 +106,8 @@ class Clip {
 
 	public function getSearchID() { return $this->searchID; }
 	
+	public function getSourceID() { return $this->sourceID; }
+	
 	public function getFeedURL() { return $this->feedURL; }
 	
 	public function getContextURL() { return $this->contextURL; }
@@ -122,6 +129,8 @@ class Clip {
 	public function setEpisodeID($int) { $this->episodeID = $int;}
 	
 	public function setSearchID($int) { $this->searchID = $int;}
+	
+	public function setSourceID($int) { $this->sourceID = $int;}
 
 	public function setFeedURL($str) { $this->feedURL = $str;}
 	

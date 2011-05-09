@@ -11,6 +11,7 @@ class ClipFactory {
 		$queryString = "select clips.id as clipID,
 							   clips.episode_id as episodeID,
 							   clips.search_term_id as searchID,
+							   clips.source_id as sourceID,
 							   clips.clip_order as clipOrder,
 							   clips.feed_url as feedURL,
 							   clips.context_url as contextURL,
@@ -36,6 +37,7 @@ class ClipFactory {
 		$dataArray['clipID'] = $resultArray['clipID'];
 		$dataArray['episodeID'] = $resultArray['episodeID'];
 		$dataArray['searchID'] = $resultArray['searchID'];
+		$dataArray['sourceID'] = $resultArray['sourceID'];
 		$dataArray['clipOrder'] = $resultArray['clipOrder'];
 		$dataArray['feedURL'] = $resultArray['feedURL'];
 		$dataArray['contextURL'] = $resultArray['contextURL'];
@@ -67,6 +69,7 @@ class ClipFactory {
 		$queryString = "select clips.id as clipID,
 							   clips.episode_id as episodeID,
 							   clips.search_term_id as searchID,
+							   clips.source_id as sourceID,
 							   clips.clip_order as clipOrder,
 							   clips.feed_url as feedURL,
 							   clips.context_url as contextURL,
@@ -76,7 +79,8 @@ class ClipFactory {
 							   clips.title as title,
 							   clips.thumbnail as thumbnail
 						  from clips
-						 where clips.id IN (".$objectIDString.")";
+						 where clips.id IN (".$objectIDString.")
+					  order by clips.clip_order";
 		
 		$result = $mysqli->query($queryString)
 			or print($mysqli->error);
@@ -85,6 +89,7 @@ class ClipFactory {
 			$dataArray['clipID'] = $resultArray['clipID'];
 			$dataArray['episodeID'] = $resultArray['episodeID'];
 			$dataArray['searchID'] = $resultArray['searchID'];
+			$dataArray['sourceID'] = $resultArray['sourceID'];
 			$dataArray['clipOrder'] = $resultArray['clipOrder'];
 			$dataArray['feedURL'] = $resultArray['feedURL'];
 			$dataArray['contextURL'] = $resultArray['contextURL'];

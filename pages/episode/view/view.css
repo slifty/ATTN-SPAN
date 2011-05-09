@@ -5,18 +5,23 @@
 	display: block;
 }
 
-.attn-player {}
-.attn-video-container {}
+.attn-player {width: 800px; border: 5px double #777777; background-color: #333344; padding: 10px; margin-top: 5px;}
 
-.attn-timeline { width: 400px;}
+video { border: 4px solid #000000;}
 
+.attn-video-container { float: left; }
+.attn-video-container video { height: 300px; width: 400px; }
 
-.attn-timeline-clip { display: inline-block; border: 3px solid #660000; margin: 5px;}
-.attn-timeline-clip img {height: 50px;}
-.attn-timeline-clip.loaded { border: 3px solid #000066; }
-.attn-timeline-clip.active { border: 3px solid #006600; }
+.attn-timeline { width: 350px; }
 
-.attn-information {}
+.attn-timeline-clip { display: inline-block; border: 3px solid #660000; margin: 10px; height:30px; cursor: pointer;}
+.attn-timeline-clip img {height: 100%;}
+.attn-timeline-clip.loaded { height: 40px; margin: 5px;}
+.attn-timeline-clip.active { border: 3px solid #aacc00; height: 40px; margin: 5px;}
+
+.attn-timeline-clip.viewed { border: 3px solid #006600; }
+
+.attn-information {float: left; width: 350px; height: 300px; margin-left: 10px;}
 .attn-information-title {}
 .attn-information-description {}
 .attn-information-context {}

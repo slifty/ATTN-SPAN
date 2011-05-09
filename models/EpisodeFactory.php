@@ -12,8 +12,8 @@ class EpisodeFactory {
 							   episodes.user_id as userID,
 							   episodes.title as title,
 							   episodes.thumbnail as thumbnail,
-							   episodes.based_date as dateBased,
-							   episodes.creation_date as dateCreated
+							   unix_timestamp(episodes.based_date) as dateBased,
+							   unix_timestamp(episodes.creation_date) as dateCreated
 						  from episodes
 						 where episodes.id = ".$objectID;
 		
@@ -58,10 +58,11 @@ class EpisodeFactory {
 							   episodes.user_id as userID,
 							   episodes.title as title,
 							   episodes.thumbnail as thumbnail,
-							   episodes.based_date as dateBased,
-							   episodes.creation_date as dateCreated
+							   unix_timestamp(episodes.based_date) as dateBased,
+							   unix_timestamp(episodes.creation_date) as dateCreated
 						  from episodes
-						 where episodes.id IN (".$objectIDString.")";
+						 where episodes.id IN (".$objectIDString.")
+					  order by episodes.based_date desc";
 		
 		$result = $mysqli->query($queryString)
 			or print($mysqli->error);

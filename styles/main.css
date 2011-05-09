@@ -6,9 +6,11 @@ body { font-family: arial; background: #222226; color: #FFFFFF }
 
 label {cursor: pointer;}
 
-h1 {}
+h1 { }
 
-h2 { margin-top: 20px;}
+h2 { margin-top: 20px; }
+
+a { color: #9999ff; text-decoration: none;}
 
 /* Core Elements */
 #container { width: 900px; margin: auto;}
