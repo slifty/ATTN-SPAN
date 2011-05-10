@@ -27,7 +27,7 @@
 	<body>
 		<div id="container">
 			<div id="header">
-				<div id="logo"><h1>ATTN-SPAN</h1></div>
+				<div id="logo"><img src="images/logo.gif" width="415" height="65" alt="Logo"></div>
 				<div id="login">
 					<?php
 						if(User::isLoggedIn()) {

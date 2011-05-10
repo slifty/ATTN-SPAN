@@ -1,6 +1,6 @@
 #episodes { width: 600px;}
 
-.episode { float: left; height: 80px; width: 80px; margin: 10px; padding: 10px; background: #333344;
+.episode { float: left; height: 80px; width: 80px; margin: 10px; padding: 10px; background: #ccccdd;
 	-moz-box-shadow: -3px 3px 3px #666;
 	-webkit-box-shadow: -3px 3px 3px #666;
 	box-shadow: -3px 3px 3px #666;

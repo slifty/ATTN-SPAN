@@ -1,2 +1,5 @@
-#registrationForm ul { list-style: none; }
-#registrationForm ul label { float: left; width: 150px;}
+#registrationForm {width: 400px; border: 1px solid #777777; background-color: #ccccdd; padding: 10px; margin: auto;}
+
+#registrationForm ul { list-style: none;}
+#registrationForm ul li { margin-top: 5px;}
+#registrationForm ul label { float: left; width: 150px; font-weight: bold;}

@@ -9,7 +9,6 @@
 		$newUser = new User();
 		$newUser->setUsername($_POST['username']);
 		$newUser->setPassword($_POST['password']);
-		$newUser->setPasswordConfirm($_POST['passwordConfirm']);
 		
 		foreach($_POST['regions'] as $interestID) {
 			$interest = InterestFactory::getObject($interestID);
