@@ -15,11 +15,23 @@
 					$encodedClips = array();
 					foreach($clips as $clip) {
 						$clipArray = array();
+						$clipArray['clipID'] = $clip->getClipID();
 						$clipArray['feedURL'] = $clip->getFeedURL();
 						$clipArray['contextURL'] = $clip->getContextURL();
 						$clipArray['title'] = $clip->getTitle();
 						$clipArray['description'] = $clip->getDescription();
+						$clipArray['start'] = $clip->getStart();
 						$clipArray['thumbnail'] = html_entity_decode($clip->getThumbnail());
+						
+						$flags = $clip->getFlags();
+						$flagArrays = array();
+						foreach($flags as $flag) {
+							$flagArray = array();
+							$flagArray['time'] = $flag->getTime();
+							$flagArray['type'] = $flag->getType();
+							$flagArrays[] = $flagArray;
+						}
+						$clipArray['flags'] = $flagArrays;
 						$encodedClips[] = json_encode($clipArray);
 					}
 				?>

@@ -1,5 +1,6 @@
 <?php
 require_once("ClipFactory.php");
+require_once("FlagFactory.php");
 class Clip {
 	
 	# Instance Variables
@@ -25,8 +26,8 @@ class Clip {
 		$this->clipOrder = 0;
 		$this->feedURL = "";
 		$this->contextURL = "";
-		$this->start = "";
-		$this->end = "";
+		$this->start = 0;
+		$this->end = 0;
 		$this->description = "";
 		$this->title = "";
 		$this->thumbnail = "";
@@ -65,8 +66,8 @@ class Clip {
 							       clips.clip_order = ".$this->getClipOrder().",
 								   clips.contextURL = '".DBConn::clean_for_mysql($this->getContextURL())."',
 								   clips.feedURL = '".DBConn::clean_for_mysql($this->getFeedURL())."',
-								   clips.start = '".DBConn::clean_for_mysql($this->getStart())."',
-								   clips.end = '".DBConn::clean_for_mysql($this->getEnd())."',
+								   clips.start = ".DBConn::clean_for_mysql($this->getStart()).",
+								   clips.end = ".DBConn::clean_for_mysql($this->getEnd()).",
 								   clips.description = '".DBConn::clean_for_mysql($this->getDescription())."',
 								   clips.title = '".DBConn::clean_for_mysql($this->getTitle())."',
 								   clips.thumbnail = '".DBConn::clean_for_mysql($this->getThumbnail())."'
@@ -85,8 +86,8 @@ class Clip {
 									".$this->getClipOrder().",
 									'".DBConn::clean_for_mysql($this->getContextURL())."',
 									'".DBConn::clean_for_mysql($this->getFeedURL())."',
-									'".DBConn::clean_for_mysql($this->getStart())."',
-									'".DBConn::clean_for_mysql($this->getEnd())."',
+									".DBConn::clean_for_mysql($this->getStart()).",
+									".DBConn::clean_for_mysql($this->getEnd()).",
 									'".DBConn::clean_for_mysql($this->getDescription())."',
 									'".DBConn::clean_for_mysql($this->getTitle())."',
 									'".DBConn::clean_for_mysql($this->getThumbnail())."')";
@@ -123,7 +124,25 @@ class Clip {
 	public function getTitle() { return $this->title; }
 	
 	public function getThumbnail() { return $this->thumbnail; }
+	
+	public function getFlags() {
+		$mysqli = DBConn::mysqli_connect();
+		$queryString = "select flags.id as flagID
+						  from flags
+						 where flags.source_id = ".$this->getSourceID()."
+						   and flags.time >= ".$this->getStart()."
+						   and flags.time <= ".$this->getEnd();
+					
+		$result = $mysqli->query($queryString)
+			or print($mysqli->error);
 		
+		$flagIDs = array();
+		while($resultArray = $result->fetch_assoc())
+			$flagIDs[] = $resultArray['flagID'];
+		
+		return FlagFactory::getObjects($flagIDs);
+	}
+	
 	
 	# Setters
 	public function setEpisodeID($int) { $this->episodeID = $int;}
@@ -136,11 +155,11 @@ class Clip {
 	
 	public function setContextURL($str) { $this->contextURL = $str;}
 	
-	public function setStart($str) { $this->start = $str;}
+	public function setStart($int) { $this->start = $int;}
 	
 	public function setClipOrder($int) { $this->clipOrder = $int;}
 	
-	public function setEnd($str) { $this->end = $str;}
+	public function setEnd($int) { $this->end = $int;}
 	
 	public function setDescription($str) { $this->description = $str;}
 	

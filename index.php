@@ -17,6 +17,7 @@
 		
 		<script src="scripts/jquery-1.5.2.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="scripts/jquery-ui-1.8.12.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="scripts/jquery.animate-shadow-min.js" type="text/javascript" charset="utf-8"></script>
 		
 		<?php
 			$file = "pages/".$p."/".$a."/".$a.".js";

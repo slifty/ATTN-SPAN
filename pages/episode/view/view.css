@@ -14,14 +14,26 @@ video { border: 4px solid #000000;}
 
 .attn-timeline { width: 350px; }
 
-.attn-timeline-clip { display: inline-block; border: 3px solid #660000; margin: 10px; height:30px; cursor: pointer;}
+.attn-timeline-clip { display: inline-block; border: 3px solid #000000; margin: 10px; height:30px; cursor: pointer;}
 .attn-timeline-clip img {height: 100%;}
 .attn-timeline-clip.loaded { height: 40px; margin: 5px;}
 .attn-timeline-clip.active { border: 3px solid #aacc00; height: 40px; margin: 5px;}
 
 .attn-timeline-clip.viewed { border: 3px solid #006600; }
 
-.attn-information {float: left; width: 350px; height: 300px; margin-left: 10px;}
+.attn-information {float: left; width: 350px; height: 200px; margin-left: 10px;}
 .attn-information-title {}
 .attn-information-description {}
 .attn-information-context {}
+
+.attn-social {float: left; height: 100px; width: 350px; margin-left: 10px;}
+.attn-social-good {float: left; height: 20px; width: 100px; margin-left: 50px; text-align: center;
+	border-radius: 15px;
+	background: #008800;
+	cursor: pointer;
+}
+.attn-social-bad {float: left; height: 20px; width: 100px; margin-left: 50px; text-align: center;
+	border-radius: 15px;
+	background: #880000;
+	cursor: pointer;
+}

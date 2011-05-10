@@ -174,6 +174,37 @@ switch($version) {
 		$mysqli->query("DELETE from appinfo") or print($mysqli->error);
 		$mysqli->query("INSERT into appinfo (version) values ('11');") or print($mysqli->error);
 		
+	case 11:
+		echo("Creating context table\n");
+		$mysqli->query("CREATE table contexts (id int auto_increment primary key,
+											source_id int,
+											time int,
+											title int,
+											url varchar(255),
+											description text,
+											creation_date datetime)") or print($mysqli->error);
+		echo("Updating clips table\n");
+		$mysqli->query("ALTER table clips
+						change column start start int,
+						change column end end int") or print($mysqli->error);
+		
+		echo("Updating app version\n");
+		$mysqli->query("DELETE from appinfo") or print($mysqli->error);
+		$mysqli->query("INSERT into appinfo (version) values ('12');") or print($mysqli->error);
+		
+	case 12:
+		echo("Creating flags table\n");
+		$mysqli->query("CREATE table flags (id int auto_increment primary key,
+											source_id int,
+											user_id int,
+											time int,
+											type varchar(16),
+											creation_date datetime)") or print($mysqli->error);
+		
+		echo("Updating app version\n");
+		$mysqli->query("DELETE from appinfo") or print($mysqli->error);
+		$mysqli->query("INSERT into appinfo (version) values ('13');") or print($mysqli->error);
+		
 	default:
 		echo("Finished updating the schema\n");
 }

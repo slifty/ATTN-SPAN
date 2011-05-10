@@ -1,7 +1,6 @@
 <?php
 	// Setup the basics
 	session_start();
-	set_include_path("/");
 	require_once("conf.php");
 	
 	// Load in the models
@@ -12,6 +11,8 @@
 	require_once("models/Interest.php");
 	require_once("models/User.php");
 	require_once("models/Source.php");
+	require_once("models/Context.php");
+	require_once("models/Flag.php");
 	
 	// Log in
 	User::logout();

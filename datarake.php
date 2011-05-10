@@ -15,6 +15,8 @@ $mysqli->query("delete from episodes");
 $mysqli->query("delete from clips");
 $mysqli->query("delete from users_interests");
 $mysqli->query("delete from sources");
+$mysqli->query("delete from contexts");
+$mysqli->query("delete from flags");
 
 $regionUSA = new Interest();
 $regionUSA->setName("United States of America");

@@ -14,10 +14,21 @@
 	var CLASS_INFORMATION_DESCRIPTION = "attn-information-description";
 	var CLASS_INFORMATION_CONTEXT = "attn-information-context";
 	
+	var CLASS_SOCIAL = "attn-social";
+	var CLASS_SOCIAL_GOOD = "attn-social-good";
+	var CLASS_SOCIAL_BAD = "attn-social-bad";
 	
+	var FLAG_GOOD = "good";
+	var FLAG_BAD = "bad";
+	
+	var API_FLAG_ADD = "api/flag_add.php";
+	
+	var goodCount = 0;
+	var badCount = 0;
 	
 	var methods = {
 		init: function() {
+			var attnPlayer = this;
 			this.addClass(CLASS_PLAYER);
 			
 			// Video Container
@@ -42,12 +53,52 @@
 			$information.append($description);
 			$information.append($context);
 			
+			// Social Layer
+			$social = $("<div />");
+			$social.addClass(CLASS_SOCIAL);
+			
+			$good = $("<div />");
+			$good.html("Yay!");
+			$good.bind("click", function() {
+				attnPlayer.attnPlayer("flagMoment", FLAG_GOOD);
+			});
+			$good.addClass(CLASS_SOCIAL_GOOD);
+			
+			$bad = $("<div />");
+			$bad.html("Boo!");
+			$bad.bind("click", function() {
+				attnPlayer.attnPlayer("flagMoment", FLAG_BAD);
+			});
+			$bad.addClass(CLASS_SOCIAL_BAD);
+			
+			$social.append($good);
+			$social.append($bad);
+			
 			// Append them all
 			this.append($videoContainer);
 			this.append($information);
+			this.append($social);
 			this.append($timeline);
 			
 			return this;
+		},
+		
+		flagMoment: function(flagType) {
+			var clipList = this.data(DATA_CLIPS);
+			var currentClip = this.data(DATA_CURRENT_CLIP);
+			var $clip = $("#clip" + currentClip);
+			var timeOffset = $clip[0].currentTime;
+			
+			var flagData = {
+				type: flagType,
+				clipID: clipList[currentClip].clipID,
+				time: timeOffset
+			};
+			
+			$.ajax(API_FLAG_ADD, {
+				data: flagData,
+				type: "POST"
+			});
 		},
 		
 		load: function(clipList) {
@@ -95,6 +146,36 @@
 			var clip = clipList[clipID];
 			$videoEl = $("<video controls preload />");
 			$videoEl.attr("id", "clip" + clipID);
+			
+			var $goodDiv = attnPlayer.find("." + CLASS_SOCIAL_GOOD);
+			var $badDiv = attnPlayer.find("." + CLASS_SOCIAL_BAD);
+			var cursor = 0;
+			$videoEl.bind("timeupdate", function() {
+				var floorTime = Math.floor(this.currentTime);
+				if(floorTime != cursor) {
+					cursor = floorTime;
+					var flags = clipList[clipID].flags;
+					for(x in flags) {
+						flag = flags[x];
+						if(flag.time == (cursor + parseInt(clipList[clipID].start))) {
+							if(flag.type == FLAG_GOOD) {
+								goodCount++;
+							}
+							else if(flag.type == FLAG_BAD) {
+								badCount++;
+							}
+						}
+					}
+					
+					$goodDiv.animate({boxShadow: '0px 0px '+ ( goodCount * 2 ) + 'px #FFFF00'},  {duration: 1000, queue: false});
+					$badDiv.animate({boxShadow: '0px 0px ' + ( badCount * 2 ) + 'px #FFFF00'},  {duration: 1000, queue: false});
+
+					goodCount = Math.max(0, goodCount - 3);
+					badCount = Math.max(0, badCount - 3);
+					//badCount = Math.floor(badCount / 2.0);
+
+				}
+			});
 			
 			$videoEl.bind("play", function() {
 				// Pause other videoss
